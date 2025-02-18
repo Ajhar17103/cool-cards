@@ -127,12 +127,13 @@ export default function DesignEditor() {
     dispatch({ type: "LOAD" });
   }, []);
 
+  // Update onResizeStop with MouseEvent | TouchEvent type
   const onResizeStop = (index: number, shape: Shape) => (
-    e: React.SyntheticEvent, 
-    direction: any, 
+    e: MouseEvent | TouchEvent,  // Update to use MouseEvent or TouchEvent
+    direction: string, 
     ref: HTMLElement, 
-    delta: any, 
-    position: any
+    delta: { width: number; height: number },  // Specified type for delta
+    position: { x: number; y: number }
   ) => {
     dispatch({
       type: "UPDATE_SHAPE",
@@ -167,7 +168,7 @@ export default function DesignEditor() {
             size={{ width: shape.width, height: shape.height }}
             position={{ x: shape.x, y: shape.y }}
             onDragStop={(e, d) => dispatch({ type: "UPDATE_SHAPE", index, payload: { x: d.x, y: d.y } })}
-            onResize={()=>onResizeStop(index, shape)}
+            onResize={onResizeStop(index, shape)} // Fixed the onResize function
             className={`absolute bg-white opacity-75 border border-gray-500 ${shape.type === "circle" ? "rounded-full" : ""}`}
             lockAspectRatio={shape.type === "circle"}
           />
