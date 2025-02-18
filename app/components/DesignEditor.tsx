@@ -1,8 +1,12 @@
 "use client";
+
 import { useEffect, useReducer, useRef, useCallback, JSX } from "react";
 import { Rnd } from "react-rnd";
 import html2canvas from "html2canvas";
-import { FaPlus, FaUndo, FaRedo, FaSave, FaCloudDownloadAlt, FaTrashAlt, FaImage } from "react-icons/fa"; // Import icons
+import { 
+  FaPlus, FaUndo, FaRedo, FaSave, 
+  FaCloudDownloadAlt, FaTrashAlt, FaImage 
+} from "react-icons/fa";
 
 // Define shape type
 type Shape = {
@@ -89,7 +93,10 @@ interface ButtonProps {
 }
 
 const Button: React.FC<ButtonProps> = ({ onClick, label, icon, className }) => (
-  <button onClick={onClick} className={`flex items-center px-4 py-2 rounded ${className}`}>
+  <button
+    onClick={onClick}
+    className={`flex items-center px-4 py-2 rounded ${className}`}
+  >
     {icon}
     <span className="ml-2">{label}</span>
   </button>
@@ -121,15 +128,18 @@ export default function DesignEditor() {
   }, []);
 
   const onResizeStop = (index: number, shape: Shape) => (
-    e: React.SyntheticEvent, direction: any, ref: HTMLElement, delta: any, position: any
+    e: React.SyntheticEvent, 
+    direction: any, 
+    ref: HTMLElement, 
+    delta: any, 
+    position: any
   ) => {
-    const newSize = ref.offsetWidth; // Take width since aspect ratio is locked
     dispatch({
       type: "UPDATE_SHAPE",
       index,
       payload: {
-        width: newSize,
-        height: shape.type === "circle" ? newSize : ref.offsetHeight, // Ensure height equals width for circles
+        width: ref.offsetWidth,
+        height: shape.type === "circle" ? ref.offsetWidth : ref.offsetHeight,
         x: position.x,
         y: position.y,
       },
@@ -137,74 +147,29 @@ export default function DesignEditor() {
   };
 
   return (
-    <div className="relative w-full h-screen bg-gray-900 text-white flex flex-col items-center justify-center px-4">
-      {/* Button Container */}
-      <div className="mb-4 flex flex-wrap justify-center gap-2 sm:gap-4 md:flex-nowrap">
-        <Button
-          onClick={() => addShape("rectangle")}
-          label="Add Rectangle"
-          icon={<FaPlus />}
-          className="bg-blue-500 w-full sm:w-auto"
-        />
-        <Button
-          onClick={() => addShape("circle")}
-          label="Add Circle"
-          icon={<FaPlus />}
-          className="bg-green-500 w-full sm:w-auto"
-        />
-        <Button
-          onClick={() => dispatch({ type: "UNDO" })}
-          label="Undo"
-          icon={<FaUndo />}
-          className="bg-yellow-500 w-full sm:w-auto"
-        />
-        <Button
-          onClick={() => dispatch({ type: "REDO" })}
-          label="Redo"
-          icon={<FaRedo />}
-          className="bg-purple-500 w-full sm:w-auto"
-        />
-        <Button
-          onClick={() => dispatch({ type: "SAVE" })}
-          label="Save"
-          icon={<FaSave />}
-          className="bg-teal-500 w-full sm:w-auto"
-        />
-        <Button
-          onClick={() => dispatch({ type: "LOAD" })}
-          label="Load"
-          icon={<FaCloudDownloadAlt />}
-          className="bg-red-700 w-full sm:w-auto"
-        />
-        <Button
-          onClick={exportAsPNG}
-          label="Export"
-          icon={<FaImage />}
-          className="bg-orange-500 w-full sm:w-auto"
-        />
-        <Button
-          onClick={() => dispatch({ type: "REMOVE_ALL" })}
-          label="Remove"
-          icon={<FaTrashAlt />}
-          className="bg-gray-500 w-full sm:w-auto"
-        />
+    <div className="relative w-full h-screen bg-gray-900 text-white flex">
+      {/* Button Container - Left Side */}
+      <div className="w-1/5 p-4 flex flex-col gap-2">
+        <Button onClick={() => addShape("rectangle")} label="Rectangle" icon={<FaPlus />} className="bg-blue-500" />
+        <Button onClick={() => addShape("circle")} label="Circle" icon={<FaPlus />} className="bg-green-500" />
+        <Button onClick={() => dispatch({ type: "UNDO" })} label="Undo" icon={<FaUndo />} className="bg-yellow-500" />
+        <Button onClick={() => dispatch({ type: "REDO" })} label="Redo" icon={<FaRedo />} className="bg-purple-500" />
+        <Button onClick={() => dispatch({ type: "SAVE" })} label="Save" icon={<FaSave />} className="bg-teal-500" />
+        <Button onClick={() => dispatch({ type: "LOAD" })} label="Load" icon={<FaCloudDownloadAlt />} className="bg-red-700" />
+        <Button onClick={exportAsPNG} label="Export" icon={<FaImage />} className="bg-orange-500" />
+        <Button onClick={() => dispatch({ type: "REMOVE_ALL" })} label="Remove" icon={<FaTrashAlt />} className="bg-gray-500" />
       </div>
-
       {/* Canvas Container */}
-      <div ref={canvasRef} className="relative w-full sm:w-[1000px] h-[600px] bg-gray-800 rounded-lg shadow-lg overflow-hidden">
+      <div ref={canvasRef} className="flex-grow bg-gray-800 rounded-lg shadow-lg overflow-hidden">
         {state.shapes.map((shape, index) => (
           <Rnd
             key={index}
             size={{ width: shape.width, height: shape.height }}
             position={{ x: shape.x, y: shape.y }}
-            onDragStop={(e, d) =>
-              dispatch({ type: "UPDATE_SHAPE", index, payload: { x: d.x, y: d.y } })
-            }
-            onResize={() => onResizeStop(index, shape)} // Pass the index and shape to onResizeStop
-            className={`absolute bg-white opacity-75 border border-gray-500 ${
-              shape.type === "circle" ? "rounded-full" : ""
-            }`}
-            lockAspectRatio={shape.type === "circle"} // Ensure circles maintain aspect ratio
+            onDragStop={(e, d) => dispatch({ type: "UPDATE_SHAPE", index, payload: { x: d.x, y: d.y } })}
+            onResize={onResizeStop(index, shape)}
+            className={`absolute bg-white opacity-75 border border-gray-500 ${shape.type === "circle" ? "rounded-full" : ""}`}
+            lockAspectRatio={shape.type === "circle"}
           />
         ))}
       </div>
