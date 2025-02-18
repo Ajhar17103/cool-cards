@@ -167,7 +167,7 @@ export default function DesignEditor() {
             size={{ width: shape.width, height: shape.height }}
             position={{ x: shape.x, y: shape.y }}
             onDragStop={(e, d) => dispatch({ type: "UPDATE_SHAPE", index, payload: { x: d.x, y: d.y } })}
-            onResize={onResizeStop(index, shape)}
+            onResize={()=>onResizeStop(index, shape)}
             className={`absolute bg-white opacity-75 border border-gray-500 ${shape.type === "circle" ? "rounded-full" : ""}`}
             lockAspectRatio={shape.type === "circle"}
           />
