@@ -70,7 +70,7 @@ Ensure you have the following installed before running this project:
 Use the following command to clone the project:
 
 ```bash
-git clone [https://github.com/yourusername/coolcard.git](https://github.com/Ajhar17103/cool-cards.git)
+git clone [https://github.com/Ajhar17103/cool-cards.git]
 ```
 
 Navigate into the project directory:
