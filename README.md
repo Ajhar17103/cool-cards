@@ -22,18 +22,122 @@ A simple design editor built using **Next.js**, **React**, and **TypeScript**. I
 - **React-RND**: A React component for resizable and draggable elements.
 - **React Icons**: A library for including icons in the project.
 
-## Installation
+## Folder Structure
 
-### Prerequisites
+```
+coolcard/
+│── .next/                  # Build artifacts (generated)
+│── app/                    # Next.js app directory
+│   │── components/          # Reusable UI components
+│   │   ├── DesignEditor.tsx # Main design editor component
+│   │── favicon.ico          # App favicon
+│   │── globals.css          # Global styles
+│   │── layout.tsx           # Layout component
+│   │── page.tsx             # Main entry page
+│── node_modules/            # Installed dependencies
+│── public/                  # Static assets
+│── .gitignore               # Git ignored files
+│── eslint.config.mjs        # ESLint configuration
+│── next-env.d.ts            # TypeScript environment types
+│── next.config.ts           # Next.js configuration
+│── package.json             # Project metadata & dependencies
+│── package-lock.json        # Lock file for package versions
+│── postcss.config.mjs       # PostCSS configuration
+│── README.md                # Project documentation
+│── tailwind.config.ts       # Tailwind CSS configuration
+│── tsconfig.json            # TypeScript configuration
+```
 
-Ensure you have the following installed on your machine:
+---
 
-- **Node.js**: Node.js is a JavaScript runtime built on Chrome's V8 JavaScript engine. You can download it from [nodejs.org](https://nodejs.org/).
-  
-- **npm** or **yarn**: These are package managers that come bundled with Node.js. You can use either npm or yarn to install dependencies.
+## Prerequisites
 
-To verify if you have Node.js and npm installed, run the following commands:
+Ensure you have the following installed before running this project:
+
+- **Node.js** (>= 16.x) - Download from [nodejs.org](https://nodejs.org/)
+- **npm** (>= 8.x) or **yarn** (>= 1.22.x) - Comes with Node.js, or install Yarn via:
+
+  ```bash
+  npm install -g yarn
+  ```
+
+---
+
+## Installation & Setup
+
+### 1. Clone the Repository
+
+Use the following command to clone the project:
 
 ```bash
-node -v
-npm -v
+git clone https://github.com/yourusername/coolcard.git
+```
+
+Navigate into the project directory:
+
+```bash
+cd coolcard
+```
+
+### 2. Install Dependencies
+
+Using **npm**:
+
+```bash
+npm install
+```
+
+Or using **yarn**:
+
+```bash
+yarn install
+```
+
+---
+
+## Running the Development Server
+
+To start the development server, use:
+
+- **npm**:
+
+  ```bash
+  npm run dev
+  ```
+
+- **yarn**:
+
+  ```bash
+  yarn dev
+  ```
+
+By default, the application will be available at:  
+📌 [http://localhost:3000](http://localhost:3000)
+
+---
+
+## Building for Production
+
+To create an optimized production build, run:
+
+```bash
+npm run build
+```
+
+Then, start the production server:
+
+```bash
+npm start
+```
+
+---
+
+## Project Configuration
+
+- **ESLint**: Linting is configured in `eslint.config.mjs`
+- **Tailwind CSS**: Styles are managed via `tailwind.config.ts` and `globals.css`
+- **PostCSS**: Configured in `postcss.config.mjs`
+- **TypeScript**: Configurations are in `tsconfig.json`
+- **Next.js Settings**: Managed via `next.config.ts`
+
+---

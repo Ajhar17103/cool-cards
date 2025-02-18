@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useReducer, useRef, useCallback } from "react";
+import { useEffect, useReducer, useRef, useCallback, JSX } from "react";
 import { Rnd } from "react-rnd";
 import html2canvas from "html2canvas";
 import { FaPlus, FaUndo, FaRedo, FaSave, FaCloudDownloadAlt, FaTrashAlt, FaImage } from "react-icons/fa"; // Import icons
@@ -200,7 +200,7 @@ export default function DesignEditor() {
             onDragStop={(e, d) =>
               dispatch({ type: "UPDATE_SHAPE", index, payload: { x: d.x, y: d.y } })
             }
-            onResize={onResizeStop(index, shape)} // Pass the index and shape to onResizeStop
+            onResize={() => onResizeStop(index, shape)} // Pass the index and shape to onResizeStop
             className={`absolute bg-white opacity-75 border border-gray-500 ${
               shape.type === "circle" ? "rounded-full" : ""
             }`}
